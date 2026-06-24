@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>✨ lallou · soutenance ✨</title>
-    <!-- Google Font + cute vibe -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
@@ -22,12 +21,12 @@
             justify-content: center;
             background: linear-gradient(145deg, #fce9f0 0%, #f8dbe9 100%);
             font-family: 'Quicksand', sans-serif;
-            padding: 1.5rem;
+            padding: 1rem;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* ---- floating sparkles / cute decorations ---- */
+        /* ---- floating decorations ---- */
         .confetti-piece {
             position: fixed;
             width: 18px;
@@ -53,16 +52,16 @@
             100% { transform: translate(-10px, 30px) rotate(360deg) scale(0.9); opacity: 0.5; }
         }
 
-        /* ---- main card (the box) ---- */
+        /* ---- main card ---- */
         .card {
             position: relative;
             z-index: 10;
             max-width: 700px;
             width: 100%;
-            background: rgba(255, 248, 245, 0.8);
+            background: rgba(255, 248, 245, 0.85);
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            border-radius: 70px 70px 70px 70px;
+            border-radius: 70px;
             box-shadow: 0 30px 60px rgba(200, 120, 140, 0.25),
                         0 10px 25px rgba(255, 200, 210, 0.3),
                         inset 0 2px 10px rgba(255, 255, 255, 0.8);
@@ -71,6 +70,7 @@
             transition: all 0.3s ease;
             border: 2px solid rgba(255, 220, 220, 0.5);
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .card:hover {
@@ -78,7 +78,6 @@
             box-shadow: 0 40px 70px rgba(200, 100, 130, 0.3);
         }
 
-        /* ---- inner box / click zone ---- */
         .click-box {
             background: rgba(255, 240, 235, 0.6);
             border-radius: 60px;
@@ -95,7 +94,6 @@
             box-shadow: 0 0 0 4px rgba(255, 170, 180, 0.3);
         }
 
-        /* ---- big emoji / icon ---- */
         .icon-big {
             font-size: 5.5rem;
             line-height: 1.2;
@@ -109,12 +107,9 @@
             transform: scale(0.9) rotate(-6deg);
         }
 
-        /* ---- title / hint ---- */
         .hint-text {
             font-size: 1.9rem;
             font-weight: 700;
-            color: #6f4a5c;
-            letter-spacing: -0.5px;
             background: linear-gradient(135deg, #b36a7a, #d47b8e);
             -webkit-background-clip: text;
             background-clip: text;
@@ -131,7 +126,6 @@
             margin-top: -0.2rem;
         }
 
-        /* ---- hidden reveal (the date + cute stuff) ---- */
         .reveal-content {
             margin-top: 1.8rem;
             padding-top: 1.2rem;
@@ -146,13 +140,12 @@
 
         .card.clicked .reveal-content {
             opacity: 1;
-            max-height: 600px;   /* enough to show all */
+            max-height: 600px;
             visibility: visible;
             pointer-events: auto;
             margin-top: 2rem;
         }
 
-        /* ---- date + details ---- */
         .date-big {
             font-size: 3.8rem;
             font-weight: 700;
@@ -212,18 +205,6 @@
             border: 1px solid #ffe2e2;
         }
 
-        .cute-extra i {
-            font-style: normal;
-            display: inline-block;
-            animation: wiggle 2s infinite;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(10deg); }
-            75% { transform: rotate(-8deg); }
-        }
-
         .tiny-message {
             margin-top: 1.2rem;
             font-size: 1.2rem;
@@ -247,7 +228,6 @@
             100% { opacity: 1; transform: scale(1.1); }
         }
 
-        /* ---- responsive tweaks ---- */
         @media (max-width: 520px) {
             .card { padding: 1.5rem 1rem; border-radius: 40px; }
             .click-box { padding: 1.8rem 1rem; }
@@ -260,7 +240,6 @@
             .tiny-message { font-size: 1rem; }
         }
 
-        /* extra cute click instruction */
         .click-cta {
             display: inline-block;
             margin-top: 0.8rem;
@@ -283,7 +262,6 @@
             transition: 0.2s;
         }
 
-        /* heart pulse on the date */
         .heart-pulse {
             display: inline-block;
             animation: pulseHeart 2s infinite;
@@ -295,7 +273,6 @@
             100% { transform: scale(1); }
         }
 
-        /* extra decoration: little stars near name */
         .star-rotate {
             display: inline-block;
             animation: spinStar 6s linear infinite;
@@ -305,11 +282,23 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* ---- mobile auto-reveal + confetti burst ---- */
+        .mobile-auto-reveal .click-cta {
+            display: none;
+        }
+        .mobile-auto-reveal .icon-big {
+            animation: celebrateBounce 0.8s ease;
+        }
+        @keyframes celebrateBounce {
+            0% { transform: scale(0.2) rotate(-10deg); opacity: 0; }
+            60% { transform: scale(1.3) rotate(6deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); }
+        }
     </style>
 </head>
 <body>
 
-    <!-- floating cute confetti / shapes -->
     <div class="confetti-piece"></div>
     <div class="confetti-piece"></div>
     <div class="confetti-piece"></div>
@@ -317,17 +306,13 @@
     <div class="confetti-piece"></div>
     <div class="confetti-piece"></div>
 
-    <!-- main card = click box -->
     <div class="card" id="magicCard">
         <div class="click-box" id="clickBox">
-            <!-- big icon -->
             <span class="icon-big">🌸</span>
             <div class="hint-text">✨ lallou's soutenance ✨</div>
             <div class="sub-hint">📌 click anywhere on the box</div>
 
-            <!-- reveal content (hidden initially) -->
             <div class="reveal-content" id="revealArea">
-                <!-- date with heart -->
                 <div>
                     <span class="date-big">
                         <span class="heart-pulse">❤️</span> 02/07/2026 <span class="heart-pulse">❤️</span>
@@ -336,24 +321,20 @@
                 <div class="time-badge">
                     🕒 12h30 – 13h30
                 </div>
-                <!-- name with stars -->
                 <div>
                     <span class="name-glow">
                         <span class="star-rotate">✦</span> lallou <span class="star-rotate">✦</span>
                     </span>
                 </div>
-                <!-- extra cute things: creativity burst -->
                 <div class="cute-extra">
                     <span>🎀 soutenance</span>
                     <span>🧁 100% réussite</span>
-                    <span>✨ magique</span>
-                    <span>💫 you're invited</span>
+                    <span>✨ you're invited</span>
+                    <span>💫 famille & amis</span>
                 </div>
-                <!-- little extra message -->
                 <div class="tiny-message">
-                    <i>💖</i>  avec tout mon cœur · famille & amis  <i>💖</i>
+                    <i>💖</i>  avec tout mon cœur  <i>💖</i>
                 </div>
-                <!-- bonus: more cuteness -->
                 <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; font-size: 1.8rem; filter: drop-shadow(0 4px 8px rgba(255,120,140,0.2));">
                     <span>🐣</span>
                     <span>🍭</span>
@@ -362,11 +343,10 @@
                     <span>🧸</span>
                 </div>
                 <div style="margin-top: 0.2rem; font-size: 0.9rem; color: #b38490; font-weight: 600; letter-spacing: 1px;">
-                    ⭐ 02.07.2026 · salle des étoiles ⭐
+                    ⭐ 02.07.2026 · Salle des Étoiles ⭐
                 </div>
             </div>
 
-            <!-- small click hint (will disappear after click) -->
             <div class="click-cta" id="clickCta">
                 👆 touche-moi !
             </div>
@@ -374,38 +354,26 @@
     </div>
 
     <script>
-        (function(){
+        (function() {
             const card = document.getElementById('magicCard');
             const clickBox = document.getElementById('clickBox');
-            const reveal = document.getElementById('revealArea');
             const cta = document.getElementById('clickCta');
 
-            // click anywhere on the card or box toggles "clicked" class
-            function handleClick(e) {
-                // if already clicked, we do nothing (or you can reset? we keep revealed)
-                if (card.classList.contains('clicked')) {
-                    // optional: you could add a little bounce or reset? we keep it revealed forever.
-                    // but we want to keep it open once clicked. 
-                    // but if they want to re-trigger? we keep it open.
-                    // we can add a tiny 'already open' feedback
-                    card.style.transform = 'scale(0.99)';
-                    setTimeout(() => { card.style.transform = ''; }, 150);
-                    return;
-                }
-                // add clicked class → reveal
+            // ---- helper: trigger reveal + confetti ----
+            function triggerReveal() {
+                if (card.classList.contains('clicked')) return;
                 card.classList.add('clicked');
-                // optional extra confetti (dom)
-                createMiniConfetti();
+                launchConfetti();
             }
 
-            // small extra confetti burst on click (just for joy)
-            function createMiniConfetti() {
-                const colors = ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e0bbff'];
-                for (let i = 0; i < 18; i++) {
+            // ---- confetti burst ----
+            function launchConfetti() {
+                const colors = ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e0bbff', '#ffccd5', '#fbc4c4'];
+                for (let i = 0; i < 28; i++) {
                     const conf = document.createElement('div');
                     conf.style.position = 'fixed';
-                    conf.style.width = (Math.random() * 12 + 6) + 'px';
-                    conf.style.height = (Math.random() * 12 + 6) + 'px';
+                    conf.style.width = (Math.random() * 14 + 6) + 'px';
+                    conf.style.height = (Math.random() * 14 + 6) + 'px';
                     conf.style.background = colors[Math.floor(Math.random() * colors.length)];
                     conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '30% 70% 50% 50%';
                     conf.style.left = (Math.random() * 80 + 10) + '%';
@@ -414,40 +382,51 @@
                     conf.style.zIndex = '999';
                     conf.style.pointerEvents = 'none';
                     conf.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
-                    conf.style.transition = 'all 1.2s cubic-bezier(0.34, 1.4, 0.64, 1)';
+                    conf.style.transition = 'all 1.4s cubic-bezier(0.34, 1.4, 0.64, 1)';
                     document.body.appendChild(conf);
 
-                    // animate
                     requestAnimationFrame(() => {
-                        conf.style.transform = `translate(${Math.random() * 120 - 60}px, ${Math.random() * -120 - 40}px) scale(0.2) rotate(${Math.random() * 400}deg)`;
+                        conf.style.transform = `translate(${Math.random() * 160 - 80}px, ${Math.random() * -140 - 40}px) scale(0.15) rotate(${Math.random() * 500}deg)`;
                         conf.style.opacity = '0';
                     });
 
-                    setTimeout(() => {
-                        conf.remove();
-                    }, 1500);
+                    setTimeout(() => conf.remove(), 1600);
                 }
             }
 
-            // attach event listeners (click on card or click-box)
+            // ---- DETECT MOBILE (touch + small screen) ----
+            const isMobile = window.matchMedia('(max-width: 768px)').matches || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            // ---- AUTO-REVEAL ON MOBILE ----
+            if (isMobile) {
+                // Mark for extra styling (hide CTA, animate icon)
+                card.classList.add('mobile-auto-reveal');
+                // Small delay so the page loads smoothly, then auto-reveal + confetti
+                setTimeout(() => {
+                    triggerReveal();
+                }, 500);
+            }
+
+            // ---- CLICK always works (desktop & mobile) ----
+            function handleClick(e) {
+                if (card.classList.contains('clicked')) {
+                    card.style.transform = 'scale(0.98)';
+                    setTimeout(() => { card.style.transform = ''; }, 120);
+                    return;
+                }
+                triggerReveal();
+            }
+
             card.addEventListener('click', handleClick);
-            // also on click-box (but card will catch it anyway)
             clickBox.addEventListener('click', function(e) {
-                e.stopPropagation(); // avoid double fire
+                e.stopPropagation();
                 handleClick(e);
             });
 
-            // if user clicks on reveal content, we don't want to toggle off, keep it open
-            // but we want to avoid closing, so we do nothing. 
-            // actually we want to keep it revealed forever, so we prevent any removal of class.
-            // we already handle that in handleClick.
-            // also we can add a "reset" but we keep it simple and joyful
-
-            // extra: if clicked, we also want to maybe show a tiny bounce effect
-            // all good!
-            console.log('🌸 lallou soutenance 02/07/2026 🌸');
+            // ---- if user is on desktop, but later resizes to mobile, we keep it as is ----
+            // (already revealed or not; no need to force)
+            console.log('🌸 lallou soutenance 02/07/2026 – mobile auto-reveal ready');
         })();
     </script>
-    <!-- extra tiny note: fully creative and cute -->
 </body>
 </html>
