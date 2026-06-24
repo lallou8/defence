@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ lallou · soutenance ✨</title>
+    <!-- Google Font + cute vibe -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #fce9f0 0%, #f8dbe9 100%);
+            font-family: 'Quicksand', sans-serif;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ---- floating sparkles / cute decorations ---- */
+        .confetti-piece {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            background: rgba(255, 215, 215, 0.4);
+            border-radius: 50% 50% 0 50%;
+            transform: rotate(45deg);
+            pointer-events: none;
+            z-index: 0;
+            animation: floatConfetti 12s infinite alternate ease-in-out;
+        }
+
+        .confetti-piece:nth-child(1) { top: 8%; left: 5%; width: 30px; height: 30px; background: #ffb7c5; animation-duration: 14s; }
+        .confetti-piece:nth-child(2) { bottom: 12%; right: 3%; width: 40px; height: 40px; background: #ffd3b5; animation-duration: 18s; animation-delay: 2s; }
+        .confetti-piece:nth-child(3) { top: 20%; right: 15%; width: 25px; height: 25px; background: #b8e0d2; animation-duration: 16s; animation-delay: 1s; }
+        .confetti-piece:nth-child(4) { bottom: 25%; left: 8%; width: 35px; height: 35px; background: #f9e6b3; animation-duration: 20s; animation-delay: 0.5s; }
+        .confetti-piece:nth-child(5) { top: 55%; left: 2%; width: 20px; height: 20px; background: #d9c8f0; animation-duration: 13s; }
+        .confetti-piece:nth-child(6) { top: 70%; right: 10%; width: 28px; height: 28px; background: #fbc4c4; animation-duration: 17s; animation-delay: 3s; }
+
+        @keyframes floatConfetti {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.6; }
+            50% { transform: translate(30px, -20px) rotate(180deg) scale(1.2); opacity: 0.9; }
+            100% { transform: translate(-10px, 30px) rotate(360deg) scale(0.9); opacity: 0.5; }
+        }
+
+        /* ---- main card (the box) ---- */
+        .card {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 248, 245, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 70px 70px 70px 70px;
+            box-shadow: 0 30px 60px rgba(200, 120, 140, 0.25),
+                        0 10px 25px rgba(255, 200, 210, 0.3),
+                        inset 0 2px 10px rgba(255, 255, 255, 0.8);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 220, 220, 0.5);
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.01) translateY(-4px);
+            box-shadow: 0 40px 70px rgba(200, 100, 130, 0.3);
+        }
+
+        /* ---- inner box / click zone ---- */
+        .click-box {
+            background: rgba(255, 240, 235, 0.6);
+            border-radius: 60px;
+            padding: 2.5rem 1.8rem;
+            border: 2px dashed #fbc4c4;
+            transition: 0.25s;
+            box-shadow: inset 0 4px 12px rgba(255, 180, 180, 0.2);
+            position: relative;
+        }
+
+        .card.clicked .click-box {
+            background: rgba(255, 225, 220, 0.7);
+            border: 2px solid #f5a3b0;
+            box-shadow: 0 0 0 4px rgba(255, 170, 180, 0.3);
+        }
+
+        /* ---- big emoji / icon ---- */
+        .icon-big {
+            font-size: 5.5rem;
+            line-height: 1.2;
+            margin-bottom: 0.2rem;
+            display: block;
+            filter: drop-shadow(0 8px 12px rgba(255, 130, 150, 0.3));
+            transition: 0.3s;
+        }
+
+        .card.clicked .icon-big {
+            transform: scale(0.9) rotate(-6deg);
+        }
+
+        /* ---- title / hint ---- */
+        .hint-text {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #6f4a5c;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #b36a7a, #d47b8e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 4px 10px rgba(210, 120, 140, 0.2);
+            margin: 0.3rem 0 0.2rem;
+        }
+
+        .sub-hint {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #b2828e;
+            letter-spacing: 1px;
+            margin-top: -0.2rem;
+        }
+
+        /* ---- hidden reveal (the date + cute stuff) ---- */
+        .reveal-content {
+            margin-top: 1.8rem;
+            padding-top: 1.2rem;
+            border-top: 2px dotted #f5c0cb;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.6s cubic-bezier(0.34, 1.4, 0.64, 1), max-height 0.7s ease, margin 0.3s;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .card.clicked .reveal-content {
+            opacity: 1;
+            max-height: 600px;   /* enough to show all */
+            visibility: visible;
+            pointer-events: auto;
+            margin-top: 2rem;
+        }
+
+        /* ---- date + details ---- */
+        .date-big {
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: #55343e;
+            letter-spacing: 2px;
+            background: linear-gradient(145deg, #fad6d6, #ffe2e2);
+            display: inline-block;
+            padding: 0.4rem 2rem;
+            border-radius: 120px;
+            box-shadow: 0 6px 0 #dba6b2, 0 12px 25px rgba(200, 100, 120, 0.2);
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+        .time-badge {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #5f3e49;
+            background: #ffebee;
+            padding: 0.2rem 1.8rem;
+            border-radius: 80px;
+            display: inline-block;
+            margin: 0.5rem 0 0.8rem;
+            box-shadow: inset 0 -3px 0 #f5b7c2;
+        }
+
+        .name-glow {
+            font-size: 2.4rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #ad6275, #d47b8e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            letter-spacing: 2px;
+            margin: 0.3rem 0;
+            text-shadow: 0 2px 15px rgba(216, 112, 132, 0.5);
+        }
+
+        .cute-extra {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem 1.8rem;
+            margin: 1.2rem 0 0.2rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #6a4b55;
+        }
+
+        .cute-extra span {
+            background: rgba(255, 215, 215, 0.5);
+            padding: 0.3rem 1.2rem;
+            border-radius: 100px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(255, 150, 170, 0.15);
+            border: 1px solid #ffe2e2;
+        }
+
+        .cute-extra i {
+            font-style: normal;
+            display: inline-block;
+            animation: wiggle 2s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(10deg); }
+            75% { transform: rotate(-8deg); }
+        }
+
+        .tiny-message {
+            margin-top: 1.2rem;
+            font-size: 1.2rem;
+            color: #7f5b67;
+            background: #fff4f1;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            border: 1px solid #fad1d1;
+            box-shadow: 0 2px 6px rgba(255, 150, 150, 0.1);
+        }
+
+        .tiny-message i {
+            font-style: normal;
+            display: inline-block;
+            animation: sparkle 1.8s infinite alternate;
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0.6; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* ---- responsive tweaks ---- */
+        @media (max-width: 520px) {
+            .card { padding: 1.5rem 1rem; border-radius: 40px; }
+            .click-box { padding: 1.8rem 1rem; }
+            .date-big { font-size: 2.6rem; padding: 0.2rem 1rem; }
+            .time-badge { font-size: 1.5rem; }
+            .hint-text { font-size: 1.6rem; }
+            .icon-big { font-size: 4.2rem; }
+            .cute-extra { font-size: 1.1rem; gap: 0.5rem; }
+            .name-glow { font-size: 1.8rem; }
+            .tiny-message { font-size: 1rem; }
+        }
+
+        /* extra cute click instruction */
+        .click-cta {
+            display: inline-block;
+            margin-top: 0.8rem;
+            font-size: 1rem;
+            background: #fad6d6;
+            padding: 0.3rem 1.8rem;
+            border-radius: 60px;
+            color: #7d4b5a;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid #fcc;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(255, 150, 150, 0.2);
+        }
+
+        .card.clicked .click-cta {
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            transition: 0.2s;
+        }
+
+        /* heart pulse on the date */
+        .heart-pulse {
+            display: inline-block;
+            animation: pulseHeart 2s infinite;
+        }
+
+        @keyframes pulseHeart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); color: #d45a6a; }
+            100% { transform: scale(1); }
+        }
+
+        /* extra decoration: little stars near name */
+        .star-rotate {
+            display: inline-block;
+            animation: spinStar 6s linear infinite;
+        }
+
+        @keyframes spinStar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- floating cute confetti / shapes -->
+    <div class="confetti-piece"></div>
+    <div class="confetti-piece"></div>
+    <div class="confetti-piece"></div>
+    <div class="confetti-piece"></div>
+    <div class="confetti-piece"></div>
+    <div class="confetti-piece"></div>
+
+    <!-- main card = click box -->
+    <div class="card" id="magicCard">
+        <div class="click-box" id="clickBox">
+            <!-- big icon -->
+            <span class="icon-big">🌸</span>
+            <div class="hint-text">✨ lallou's soutenance ✨</div>
+            <div class="sub-hint">📌 click anywhere on the box</div>
+
+            <!-- reveal content (hidden initially) -->
+            <div class="reveal-content" id="revealArea">
+                <!-- date with heart -->
+                <div>
+                    <span class="date-big">
+                        <span class="heart-pulse">❤️</span> 02/07/2026 <span class="heart-pulse">❤️</span>
+                    </span>
+                </div>
+                <div class="time-badge">
+                    🕒 12h30 – 13h30
+                </div>
+                <!-- name with stars -->
+                <div>
+                    <span class="name-glow">
+                        <span class="star-rotate">✦</span> lallou <span class="star-rotate">✦</span>
+                    </span>
+                </div>
+                <!-- extra cute things: creativity burst -->
+                <div class="cute-extra">
+                    <span>🎀 soutenance</span>
+                    <span>🧁 100% réussite</span>
+                    <span>✨ magique</span>
+                    <span>💫 you're invited</span>
+                </div>
+                <!-- little extra message -->
+                <div class="tiny-message">
+                    <i>💖</i>  avec tout mon cœur · famille & amis  <i>💖</i>
+                </div>
+                <!-- bonus: more cuteness -->
+                <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; font-size: 1.8rem; filter: drop-shadow(0 4px 8px rgba(255,120,140,0.2));">
+                    <span>🐣</span>
+                    <span>🍭</span>
+                    <span>🦋</span>
+                    <span>🌈</span>
+                    <span>🧸</span>
+                </div>
+                <div style="margin-top: 0.2rem; font-size: 0.9rem; color: #b38490; font-weight: 600; letter-spacing: 1px;">
+                    ⭐ 02.07.2026 · salle des étoiles ⭐
+                </div>
+            </div>
+
+            <!-- small click hint (will disappear after click) -->
+            <div class="click-cta" id="clickCta">
+                👆 touche-moi !
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            const card = document.getElementById('magicCard');
+            const clickBox = document.getElementById('clickBox');
+            const reveal = document.getElementById('revealArea');
+            const cta = document.getElementById('clickCta');
+
+            // click anywhere on the card or box toggles "clicked" class
+            function handleClick(e) {
+                // if already clicked, we do nothing (or you can reset? we keep revealed)
+                if (card.classList.contains('clicked')) {
+                    // optional: you could add a little bounce or reset? we keep it revealed forever.
+                    // but we want to keep it open once clicked. 
+                    // but if they want to re-trigger? we keep it open.
+                    // we can add a tiny 'already open' feedback
+                    card.style.transform = 'scale(0.99)';
+                    setTimeout(() => { card.style.transform = ''; }, 150);
+                    return;
+                }
+                // add clicked class → reveal
+                card.classList.add('clicked');
+                // optional extra confetti (dom)
+                createMiniConfetti();
+            }
+
+            // small extra confetti burst on click (just for joy)
+            function createMiniConfetti() {
+                const colors = ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e0bbff'];
+                for (let i = 0; i < 18; i++) {
+                    const conf = document.createElement('div');
+                    conf.style.position = 'fixed';
+                    conf.style.width = (Math.random() * 12 + 6) + 'px';
+                    conf.style.height = (Math.random() * 12 + 6) + 'px';
+                    conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '30% 70% 50% 50%';
+                    conf.style.left = (Math.random() * 80 + 10) + '%';
+                    conf.style.top = (Math.random() * 80 + 10) + '%';
+                    conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    conf.style.zIndex = '999';
+                    conf.style.pointerEvents = 'none';
+                    conf.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
+                    conf.style.transition = 'all 1.2s cubic-bezier(0.34, 1.4, 0.64, 1)';
+                    document.body.appendChild(conf);
+
+                    // animate
+                    requestAnimationFrame(() => {
+                        conf.style.transform = `translate(${Math.random() * 120 - 60}px, ${Math.random() * -120 - 40}px) scale(0.2) rotate(${Math.random() * 400}deg)`;
+                        conf.style.opacity = '0';
+                    });
+
+                    setTimeout(() => {
+                        conf.remove();
+                    }, 1500);
+                }
+            }
+
+            // attach event listeners (click on card or click-box)
+            card.addEventListener('click', handleClick);
+            // also on click-box (but card will catch it anyway)
+            clickBox.addEventListener('click', function(e) {
+                e.stopPropagation(); // avoid double fire
+                handleClick(e);
+            });
+
+            // if user clicks on reveal content, we don't want to toggle off, keep it open
+            // but we want to avoid closing, so we do nothing. 
+            // actually we want to keep it revealed forever, so we prevent any removal of class.
+            // we already handle that in handleClick.
+            // also we can add a "reset" but we keep it simple and joyful
+
+            // extra: if clicked, we also want to maybe show a tiny bounce effect
+            // all good!
+            console.log('🌸 lallou soutenance 02/07/2026 🌸');
+        })();
+    </script>
+    <!-- extra tiny note: fully creative and cute -->
+</body>
+</html>
